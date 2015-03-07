@@ -19,9 +19,9 @@ app.get('/', function (req, res) {
 });
 
 var people = [
-				{Name: 'Steven', Age: 25},
-				{Name: 'Jhon', Age: 15},
-				{Name: 'Jane', Age: 50}
+				{ID: 1, Name: 'Steven', Age: 25},
+				{ID: 2, Name: 'Jhon', Age: 15},
+				{ID: 3, Name: 'Jane', Age: 50}
 			 ];
 
 app.get('/read', function (req, res) {
@@ -31,6 +31,51 @@ app.get('/read', function (req, res) {
 app.post('/read2', function (req, res) {
 	console.log(req.body.name);
   res.send(people);
+});
+
+app.post('/create', function (req, res) {
+	console.log(req.body);
+	var item = {
+		Name: req.body.Name,
+		Age: req.body.Age,
+		ID: people.length + 1
+	};
+	
+	people.push(item);
+  	res.send(item);
+});
+
+app.get('/create2', function (req, res) {
+	console.log(req.query);
+	var item = {
+		Name: req.query.Name,
+		Age: req.query.Age,
+		ID: people.length + 1
+	};
+	
+	people.push(item);
+  	res.send(item);
+});
+
+function deleteItem(id) {
+	var itemIndex = people.map(function(data) { return id; }).indexOf(id);
+
+	if (itemIndex >= 0)
+		people.splice(itemIndex, 1);
+	else
+		throw 'Item was not found through cuid ' + params.cuid;
+}
+
+app.post('/delete', function (req, res) {
+	console.log(req.body);
+	deleteItem({ id: req.body.ID });
+  	res.send(people);
+});
+
+app.get('/delete2', function (req, res) {
+	console.log(req.query);
+	deleteItem({ id: req.query.ID });
+  	res.send(people);
 });
 
 var server = app.listen(3000, function () {
