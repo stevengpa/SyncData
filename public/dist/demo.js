@@ -10735,6 +10735,8 @@ syncdata.observe.setObservable(function(params){
 var item = { Name: 'Mochi', Age: 27, cuid: 'ci6yfbkxl0000334z7f1w8gr7' };
 
 // >> POST
+syncdata.setRoutes({READ: '/read'});
+syncdata.read();
 
 syncdata.setRoutes({CREATE: '/create'});
 syncdata.create({ item: item }, function(response) {
@@ -10748,19 +10750,21 @@ syncdata.setRoutes({CREATE: '/create2'});
 syncdata.create({ item: item, method:'GET', async: false, data: item }, function(response) {
 	console.log('GET CREATE');
 	console.log(response);
+	console.log(syncdata.data());
 });
 */
 
-/* >> READ GET
+// >> READ 
+/*
+// >> GET
 syncdata.setRoutes({READ: '/read'});
 
 syncdata.read(null, function(response){
 	console.log('GET');
 	console.log(response);
 });
-*/
 
-/* READ POST
+// >> POST
 syncdata.setRoutes({READ: '/read2'});
 
 syncdata.read({method: 'POST', async: false, data: {name: 'Steven'} }, function(response){
@@ -10770,14 +10774,13 @@ syncdata.read({method: 'POST', async: false, data: {name: 'Steven'} }, function(
 */
 
 // >> UPDATE
-
+/*
 syncdata.setRoutes({READ: '/read'});
 syncdata.read({ async: false });
+
 var item1 = syncdata.data()[0];
 var item2 = syncdata.data()[1];
-
 item1.Name = 'Panfilo';
-
 item2.Name 	= 'Marito';
 item2.Age 	= 100;
 
@@ -10792,13 +10795,16 @@ syncdata.update({ item: item2, method: 'GET' }, function(response) {
 	console.log('GET UPDATE');
 	console.log(response);
 });
+*/
 
 // >> DELETE
 /*
 syncdata.setRoutes({READ: '/read'});
 syncdata.read({ async: false });
-var item1 = syncdata.data()[0];
-var item2 = syncdata.data()[1];
+console.log(syncdata.data());
+
+var item1 = syncdata.data()[1];
+var item2 = syncdata.data()[0];
 
 syncdata.setRoutes({DELETE: '/delete'});
 syncdata.delete({ cuid: item1.cuid, key: 'ID' }, function(response) {
@@ -10814,7 +10820,7 @@ syncdata.delete({ cuid: item2.cuid, method:'GET' }, function(response) {
 */
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_ea4077f6.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_80a1c318.js","/")
 },{"./syncdata.js":8,"buffer":2,"oMfpAn":5}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var $ 		= require('jquery'),
@@ -10862,10 +10868,11 @@ var $ 		= require('jquery'),
 	}
 	
 	validateProps: function validateProps(params, prop) {
+		
 		 if ((params == null) || (params == 'undefined'))
 		 { throw 'Missing parameters.'; }
 		 
-		 if ((params[prop] == null) || (params[prop] == 'undefined'))
+		 if (!params.hasOwnProperty(prop))
 		 { throw 'Missing property ' + prop + '.'; }
 	 }
 	
@@ -10893,6 +10900,16 @@ var $ 		= require('jquery'),
 		catch (err)
 		{ throw err; }
 			
+	}
+	
+	cloneObject : function cloneObject(params) {
+		
+		validateProps(params, 'item');
+		if(params.item == null || typeof(params.item) != 'object') throw 'Item is not an object.';
+
+		var strObject = JSON.stringify(params.item);
+		
+		return JSON.parse(strObject);
 	}
 	 
 	var observableCallback = undefined;
@@ -10925,9 +10942,15 @@ var $ 		= require('jquery'),
 	return {
 		
 		select: function select(params) {
+			
+			params 		= params || {};
+			
 			validateProps(params, 'cuid');
+			(params.hasOwnProperty('clone')) ? params.clone = params.clone : params.clone = true;
+			
 			var item = Data.filter(function (x) { return x.cuid == params.cuid; })[0];
-			return item;
+			
+			return (params.clone) ? cloneObject({ item: item}) : item;
 		},
 		
 		create: function create(params, callback) {
@@ -11097,7 +11120,8 @@ var $ 		= require('jquery'),
 			
 			if (params.currentitem == null) throw 'Item was not found by cuid ' + params.item['cuid'];
 			if (params.currentitem == 'undefined') throw 'Item was not found by cuid ' + params.item['cuid'];
-			var clone = $.extend({}, params.currentitem);
+			
+			var clone = cloneObject({ item: params.currentitem });
 			
 			// Ajax Async
 			if (params.async == true) {
@@ -11134,10 +11158,11 @@ var $ 		= require('jquery'),
 		},
 		
 		// DATA
-		data: function data() {
-			var Clone = {};
-			$.extend(Clone, Data);
-			return Clone;
+		data: function data(params) {
+			params 		= params || {};
+			(params.hasOwnProperty('clone')) ? params.clone = params.clone : params.clone = true;
+			
+			return (params.clone) ? cloneObject({ item: Data}) : Data;
 		},
 		
 		// ROUTES

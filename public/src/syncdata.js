@@ -43,10 +43,11 @@ var $ 		= require('jquery'),
 	}
 	
 	validateProps: function validateProps(params, prop) {
+		
 		 if ((params == null) || (params == 'undefined'))
 		 { throw 'Missing parameters.'; }
 		 
-		 if ((params[prop] == null) || (params[prop] == 'undefined'))
+		 if (!params.hasOwnProperty(prop))
 		 { throw 'Missing property ' + prop + '.'; }
 	 }
 	
@@ -74,6 +75,16 @@ var $ 		= require('jquery'),
 		catch (err)
 		{ throw err; }
 			
+	}
+	
+	cloneObject : function cloneObject(params) {
+		
+		validateProps(params, 'item');
+		if(params.item == null || typeof(params.item) != 'object') throw 'Item is not an object.';
+
+		var strObject = JSON.stringify(params.item);
+		
+		return JSON.parse(strObject);
 	}
 	 
 	var observableCallback = undefined;
@@ -106,9 +117,15 @@ var $ 		= require('jquery'),
 	return {
 		
 		select: function select(params) {
+			
+			params 		= params || {};
+			
 			validateProps(params, 'cuid');
+			(params.hasOwnProperty('clone')) ? params.clone = params.clone : params.clone = true;
+			
 			var item = Data.filter(function (x) { return x.cuid == params.cuid; })[0];
-			return item;
+			
+			return (params.clone) ? cloneObject({ item: item}) : item;
 		},
 		
 		create: function create(params, callback) {
@@ -278,7 +295,8 @@ var $ 		= require('jquery'),
 			
 			if (params.currentitem == null) throw 'Item was not found by cuid ' + params.item['cuid'];
 			if (params.currentitem == 'undefined') throw 'Item was not found by cuid ' + params.item['cuid'];
-			var clone = $.extend({}, params.currentitem);
+			
+			var clone = cloneObject({ item: params.currentitem });
 			
 			// Ajax Async
 			if (params.async == true) {
@@ -315,10 +333,11 @@ var $ 		= require('jquery'),
 		},
 		
 		// DATA
-		data: function data() {
-			var Clone = {};
-			$.extend(Clone, Data);
-			return Clone;
+		data: function data(params) {
+			params 		= params || {};
+			(params.hasOwnProperty('clone')) ? params.clone = params.clone : params.clone = true;
+			
+			return (params.clone) ? cloneObject({ item: Data}) : Data;
 		},
 		
 		// ROUTES

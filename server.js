@@ -58,23 +58,24 @@ app.get('/create2', function (req, res) {
 });
 
 function deleteItem(id) {
-	var itemIndex = people.map(function(data) { return id; }).indexOf(id);
+
+	var itemIndex = people.map(function(data) { return data.ID.toString(); }).indexOf(id);
 
 	if (itemIndex >= 0)
 		people.splice(itemIndex, 1);
 	else
-		throw 'Item was not found through cuid ' + params.cuid;
+		throw 'Item was not found through cuid';
 }
 
 app.post('/delete', function (req, res) {
 	console.log(req.body);
-	deleteItem({ id: req.body.ID });
+	deleteItem(req.body.ID);
   	res.send(people);
 });
 
 app.get('/delete2', function (req, res) {
 	console.log(req.query);
-	deleteItem({ id: req.query.ID });
+	deleteItem(req.query.ID);
   	res.send(people);
 });
 
