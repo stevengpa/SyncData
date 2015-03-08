@@ -12,7 +12,10 @@ var $ 		= require('jquery'),
 
 	var Data = [];
 
-	window.async = function(fn, arguments, callback, ms){
+	(this.hasOwnProperty('global')) ? global.$ = $ : window.$ = $;
+	(this.hasOwnProperty('global')) ? global.cuid = cuid : window.cuid = cuid;
+	 
+	async: function async(fn, arguments, callback, ms){
 
 			// Save Params in an Object
 			var run = { fn: fn, arguments: arguments, callback: callback };
@@ -23,10 +26,6 @@ var $ 		= require('jquery'),
 				run.callback(run.fn.apply(undefined, run.arguments));
 			}, (ms == undefined) ? 0 : ms);
 	}
-
-	window.$ = $;
-
-	window.cuid = cuid;
 
 	applyCuid: function applyCuid(response) {
 
@@ -356,7 +355,7 @@ var $ 		= require('jquery'),
 		getRoutes: function getRoutes(params) {
 			return routes;
 		},
-
+		
 		// OBSERVABLE
 		observe: obs()
 	}

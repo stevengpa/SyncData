@@ -6,7 +6,7 @@ var gulp 		= require('gulp'),
 gulp.task('browserify-syncdata', function() {
 	gulp.src('./public/src/syncdata.js')
 		.pipe(browserify({ insertGlobals: true }))
-		.pipe(uglify())
+		//.pipe(uglify())
 		//.pipe(rename({ suffix: '.min'}))
 		.pipe(gulp.dest('./public/dist'))
 });
@@ -14,7 +14,7 @@ gulp.task('browserify-syncdata', function() {
 gulp.task('browserify-demo', function() {
 	gulp.src('./public/src/demo.js')
 		.pipe(browserify({ insertGlobals: true }))
-		.pipe(uglify())
+		//.pipe(uglify())
 		//.pipe(rename({ suffix: '.min'}))
 		.pipe(gulp.dest('./public/dist'))
 });

@@ -1,11 +1,11 @@
 var express     = require('express');
 var bodyParser  = require('body-parser');
 var app         = express();
-var syncdata 	= require('./public/dist/syncdata.js'),
-	sync 		= syncdata;
+var syncdata 	= require('./public/src/syncdata.js'),
+	sync 		= syncdata();
 
 //console.log('-- object --');
-//console.log(syncdata);
+console.log(sync);
 
 // Views
 app.use(express(__dirname + 'views')); 
