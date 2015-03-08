@@ -24,6 +24,10 @@ var $ 		= require('jquery'),
 			}, (ms == undefined) ? 0 : ms);
 	}
 	
+	window.$ = $;
+	 
+	window.cuid = cuid;
+	 
 	applyCuid: function applyCuid(response) {
 		
 		response = response || {};
@@ -116,6 +120,7 @@ var $ 		= require('jquery'),
 	 
 	return {
 		
+		// CRUD
 		select: function select(params) {
 			
 			params 		= params || {};
@@ -358,4 +363,4 @@ var $ 		= require('jquery'),
 	
 };
 
-module.exports = syncdata();
+module.exports = syncdata;

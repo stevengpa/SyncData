@@ -11,17 +11,9 @@ gulp.task('browserify', function() {
 		.pipe(gulp.dest('./public/dist'))
 });
 
-gulp.task('browserify-min', function() {
-	gulp.src('./public/src/*.js')
-		.pipe(browserify({ insertGlobals: true }))
-		.pipe(uglify())
-		.pipe(rename({ suffix: '.min'}))
-		.pipe(gulp.dest('./public/dist'))
-});
-
 gulp.task('watch', function() {
 	gulp.watch('./public/src/*.js', ['browserify']);
-	gulp.watch('./public/src/*.js', ['browserify-min']);
+	//gulp.watch('./public/src/*.js', ['browserify-min']);
 });
 
 gulp.task('run', ['watch']);

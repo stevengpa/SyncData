@@ -10745,6 +10745,10 @@ var $ 		= require('jquery'),
 			}, (ms == undefined) ? 0 : ms);
 	}
 	
+	window.$ = $;
+	 
+	window.cuid = cuid;
+	 
 	applyCuid: function applyCuid(response) {
 		
 		response = response || {};
@@ -10837,6 +10841,7 @@ var $ 		= require('jquery'),
 	 
 	return {
 		
+		// CRUD
 		select: function select(params) {
 			
 			params 		= params || {};
@@ -11079,6 +11084,6 @@ var $ 		= require('jquery'),
 	
 };
 
-module.exports = syncdata();
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_93b39788.js","/")
+module.exports = syncdata;
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_9191c3d0.js","/")
 },{"buffer":2,"cuid":1,"jquery":6,"oMfpAn":5}]},{},[7])

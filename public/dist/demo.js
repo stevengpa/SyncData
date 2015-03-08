@@ -10719,7 +10719,8 @@ return jQuery;
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/jquery/dist/jquery.js","/../../node_modules/jquery/dist")
 },{"buffer":2,"oMfpAn":5}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-var syncdata = require('./syncdata.js');
+var sync = require('./syncdata.js'),
+	syncdata = sync();
 
 // >> Observable
 syncdata.observe.setObservable(function(params){
@@ -10820,7 +10821,7 @@ syncdata.delete({ cuid: item2.cuid, method:'GET' }, function(response) {
 */
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_bce47c7e.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_c6bb6c1.js","/")
 },{"./syncdata.js":8,"buffer":2,"oMfpAn":5}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var $ 		= require('jquery'),
@@ -10849,6 +10850,10 @@ var $ 		= require('jquery'),
 			}, (ms == undefined) ? 0 : ms);
 	}
 	
+	window.$ = $;
+	 
+	window.cuid = cuid;
+	 
 	applyCuid: function applyCuid(response) {
 		
 		response = response || {};
@@ -10941,6 +10946,7 @@ var $ 		= require('jquery'),
 	 
 	return {
 		
+		// CRUD
 		select: function select(params) {
 			
 			params 		= params || {};
@@ -11183,6 +11189,6 @@ var $ 		= require('jquery'),
 	
 };
 
-module.exports = syncdata();
+module.exports = syncdata;
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/syncdata.js","/")
 },{"buffer":2,"cuid":1,"jquery":6,"oMfpAn":5}]},{},[7])

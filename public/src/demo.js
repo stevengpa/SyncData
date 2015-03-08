@@ -1,4 +1,5 @@
-var syncdata = require('./syncdata.js');
+var sync = require('./syncdata.js'),
+	syncdata = sync();
 
 // >> Observable
 syncdata.observe.setObservable(function(params){
