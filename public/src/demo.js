@@ -1,8 +1,12 @@
-var sync = require('./syncdata.js'),
-	syncdata = sync();
+// Browserify
+var syncdata = require('./syncdata.js'),
+	syncData = syncdata();
+
+// Browser
+// var syncData = syncdata();
 
 // >> Observable
-syncdata.observe.setObservable(function(params){
+syncData.observe.setObservable(function(params){
 	// Observable Result
 	//>> Params
 	console.log('Observable Result');
@@ -10,44 +14,46 @@ syncdata.observe.setObservable(function(params){
 	// >> End Params
 });
 
+console.log('demo');
+
 // >> CREATE
 /*
 var item = { Name: 'Mochi', Age: 27, cuid: 'ci6yfbkxl0000334z7f1w8gr7' };
 
 // >> POST
-syncdata.setRoutes({READ: '/read'});
-syncdata.read();
+syncData.setRoutes({READ: '/read'});
+syncData.read();
 
-syncdata.setRoutes({CREATE: '/create'});
-syncdata.create({ item: item }, function(response) {
+syncData.setRoutes({CREATE: '/create'});
+syncData.create({ item: item }, function(response) {
 	console.log('POST CREATE');
 	console.log(response);
 });
 
 // >> GET
 
-syncdata.setRoutes({CREATE: '/create2'});
-syncdata.create({ item: item, method:'GET', async: false, data: item }, function(response) {
+syncData.setRoutes({CREATE: '/create2'});
+syncData.create({ item: item, method:'GET', async: false, data: item }, function(response) {
 	console.log('GET CREATE');
 	console.log(response);
-	console.log(syncdata.data());
+	console.log(syncData.data());
 });
 */
 
 // >> READ 
 /*
 // >> GET
-syncdata.setRoutes({READ: '/read'});
+syncData.setRoutes({READ: '/read'});
 
-syncdata.read(null, function(response){
+syncData.read(null, function(response){
 	console.log('GET');
 	console.log(response);
 });
 
 // >> POST
-syncdata.setRoutes({READ: '/read2'});
+syncData.setRoutes({READ: '/read2'});
 
-syncdata.read({method: 'POST', async: false, data: {name: 'Steven'} }, function(response){
+syncData.read({method: 'POST', async: false, data: {name: 'Steven'} }, function(response){
 	console.log('POST READ');
 	console.log(response);
 });
@@ -55,23 +61,23 @@ syncdata.read({method: 'POST', async: false, data: {name: 'Steven'} }, function(
 
 // >> UPDATE
 /*
-syncdata.setRoutes({READ: '/read'});
-syncdata.read({ async: false });
+syncData.setRoutes({READ: '/read'});
+syncData.read({ async: false });
 
-var item1 = syncdata.data()[0];
-var item2 = syncdata.data()[1];
+var item1 = syncData.data()[0];
+var item2 = syncData.data()[1];
 item1.Name = 'Panfilo';
 item2.Name 	= 'Marito';
 item2.Age 	= 100;
 
-syncdata.setRoutes({UPDATE: '/update'});
-syncdata.update({ item: item1 }, function(response) {
+syncData.setRoutes({UPDATE: '/update'});
+syncData.update({ item: item1 }, function(response) {
 	console.log('POST UPDATE');
 	console.log(response);
 });
 
-syncdata.setRoutes({UPDATE: '/update2'});
-syncdata.update({ item: item2, method: 'GET' }, function(response) {
+syncData.setRoutes({UPDATE: '/update2'});
+syncData.update({ item: item2, method: 'GET' }, function(response) {
 	console.log('GET UPDATE');
 	console.log(response);
 });
@@ -79,21 +85,21 @@ syncdata.update({ item: item2, method: 'GET' }, function(response) {
 
 // >> DELETE
 /*
-syncdata.setRoutes({READ: '/read'});
-syncdata.read({ async: false });
-console.log(syncdata.data());
+syncData.setRoutes({READ: '/read'});
+syncData.read({ async: false });
+console.log(syncData.data());
 
-var item1 = syncdata.data()[1];
-var item2 = syncdata.data()[0];
+var item1 = syncData.data()[1];
+var item2 = syncData.data()[0];
 
-syncdata.setRoutes({DELETE: '/delete'});
-syncdata.delete({ cuid: item1.cuid, key: 'ID' }, function(response) {
+syncData.setRoutes({DELETE: '/delete'});
+syncData.delete({ cuid: item1.cuid, key: 'ID' }, function(response) {
 	console.log('POST DELETE');
 	console.log(response);
 });
 
-syncdata.setRoutes({DELETE: '/delete2'});
-syncdata.delete({ cuid: item2.cuid, method:'GET' }, function(response) {
+syncData.setRoutes({DELETE: '/delete2'});
+syncData.delete({ cuid: item2.cuid, method:'GET' }, function(response) {
 	console.log('GET DELETE');
 	console.log(response);
 });
