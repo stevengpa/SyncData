@@ -6,22 +6,46 @@ var gulp 		= require('gulp'),
 gulp.task('browserify-syncdata', function() {
 	gulp.src('./public/src/syncdata.js')
 		.pipe(browserify({ insertGlobals: true }))
-		//.pipe(uglify())
-		//.pipe(rename({ suffix: '.min'}))
+		.pipe(rename({ prefix: 'browser-'}))
 		.pipe(gulp.dest('./public/dist'))
 });
+
+gulp.task('browserify-syncdata-min', function() {
+	gulp.src('./public/src/syncdata.js')
+		.pipe(browserify({ insertGlobals: true }))
+		.pipe(uglify())
+		.pipe(rename({ prefix: 'browser-', suffix: '.min'}))
+		.pipe(gulp.dest('./public/dist'))
+});
+
+gulp.task('syncdata-node', function() {
+	gulp.src('./public/src/syncdata.js')
+		.pipe(rename({ prefix: 'node-'}))
+		.pipe(gulp.dest('./public/dist'))
+});
+
 
 gulp.task('browserify-demo', function() {
 	gulp.src('./public/src/demo.js')
 		.pipe(browserify({ insertGlobals: true }))
-		//.pipe(uglify())
-		//.pipe(rename({ suffix: '.min'}))
+		.pipe(uglify())
+		.pipe(rename({ prefix: 'browser-', suffix: '.min'}))
+		.pipe(gulp.dest('./public/dist'))
+});
+
+gulp.task('browserify-demo-min', function() {
+	gulp.src('./public/src/demo.js')
+		.pipe(browserify({ insertGlobals: true }))
+		.pipe(rename({ prefix: 'browser-'}))
 		.pipe(gulp.dest('./public/dist'))
 });
 
 gulp.task('watch', function() {
 	gulp.watch('./public/src/syncdata.js', ['browserify-syncdata']);
+	gulp.watch('./public/src/syncdata.js', ['browserify-syncdata-min']);
+	gulp.watch('./public/src/syncdata.js', ['syncdata-node']);
 	gulp.watch('./public/src/demo.js', ['browserify-demo']);
+	gulp.watch('./public/src/demo.js', ['browserify-demo-min']);
 });
 
 gulp.task('run', ['watch']);

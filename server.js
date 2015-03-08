@@ -1,7 +1,7 @@
 var express     = require('express');
 var bodyParser  = require('body-parser');
 var app         = express();
-var syncdata 	= require('./public/src/syncdata.js'),
+var syncdata 	= require('./public/dist/node-syncdata.js'),
 	sync 		= syncdata();
 
 //console.log('-- object --');
