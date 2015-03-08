@@ -10780,6 +10780,22 @@ var $ 		= require('jquery'),
 		else
 			throw 'Item was not found through cuid ' + params.cuid;
 	}
+	
+ 	updateProps : function updateProps(source, dest) {
+		try {
+			
+			for (var key in source) {
+
+				if(dest.hasOwnProperty(key)){
+					dest[key] = source[key];
+				}
+				
+			}
+		}
+		catch (err)
+		{ throw err; }
+			
+	}
 	 
 	var observableCallback = undefined;
 	obs: function obs() {
@@ -10885,8 +10901,8 @@ var $ 		= require('jquery'),
 					$.post(routes.READ, params.data, 
 						   function(response) {
 								Data = applyCuid(response);
-								async(obs().execute, [{ route: 'READ', response: response}]);
-								callback(response);
+								async(obs().execute, [{ route: 'READ', response: Data}]);
+								callback(Data);
 							}
 				  	);									
 				}
@@ -10896,8 +10912,8 @@ var $ 		= require('jquery'),
 					$.get(routes.READ, params.data, 
 						   function(response){ 
 								Data = applyCuid(response);
-								async(obs().execute, [{ route: 'READ', response: response}]);
-								callback(response);
+								async(obs().execute, [{ route: 'READ', response: Data}]);
+								callback(Data);
 							}
 				  	);									
 				}
@@ -10905,8 +10921,8 @@ var $ 		= require('jquery'),
 			// Ajax Sync
 				var response = $.ajax({ url: routes.READ, type: params.method, data: params.data, async:false }).responseText;
 				Data = applyCuid(response);
-				async(obs().execute, [{ route: 'READ', response: response}]);
-				callback(response);
+				async(obs().execute, [{ route: 'READ', response: Data}]);
+				callback(Data);
 			}
 			
 			return this;
@@ -10967,6 +10983,58 @@ var $ 		= require('jquery'),
 			return this;
 		},
 		
+		update: function update(params, callback) {
+			
+			validateRoute({ ROUTE: 'UPDATE', VALUE: routes.UPDATE });
+			validateProps(params, 'item');
+			validateProps(params.item, 'cuid');
+			
+			params = params || {};
+			callback = callback || function() {};
+			
+			(params.hasOwnProperty('async')) 	? params.async = params.async : params.async = true;
+			(params.hasOwnProperty('method')) 	? params.method = params.method : params.method = 'POST';
+			
+			params.currentitem = this.select({ cuid: params.item['cuid'] });
+			
+			if (params.currentitem == null) throw 'Item was not found by cuid ' + params.item['cuid'];
+			if (params.currentitem == 'undefined') throw 'Item was not found by cuid ' + params.item['cuid'];
+			var clone = $.extend({}, params.currentitem);
+			
+			// Ajax Async
+			if (params.async == true) {
+				// POST
+				if (params.method.toUpperCase() == 'POST') {
+					$.post(routes.UPDATE, params.item,
+						   function(response) {
+								updateProps(params.item, params.currentitem);
+								async(obs().execute, [{ route: 'UPDATE', response: response, item: clone }]);
+								callback(response, clone);
+							}
+				  	);									
+				}
+				
+				// GET
+				if (params.method.toUpperCase() == 'GET') {
+					$.get(routes.UPDATE, params.item, 
+						   function(response){ 
+								updateProps(params.item, params.currentitem);
+								async(obs().execute, [{ route: 'UPDATE', response: response, item: clone }]);
+								callback(response, clone );
+							}
+				  	);									
+				}
+			} else {
+			// Ajax Sync
+				var response = $.ajax({ url: routes.UPDATE, type: params.method, data: params.item, async:false }).responseText;
+				updateProps(params.item, params.currentitem);
+				async(obs().execute, [{ route: 'UPDATE', response: response, item: clone }]);
+				callback(response, clone);
+			}
+			
+			return this;
+		},
+		
 		// DATA
 		data: function data() {
 			var Clone = {};
@@ -10993,5 +11061,5 @@ var $ 		= require('jquery'),
 };
 
 module.exports = syncdata();
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_5e88d5cb.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_66496f7d.js","/")
 },{"buffer":2,"cuid":1,"jquery":6,"oMfpAn":5}]},{},[7])

@@ -78,6 +78,31 @@ app.get('/delete2', function (req, res) {
   	res.send(people);
 });
 
+function select(params) {
+	var item = people.filter(function (x) { return x.ID == params.ID; })[0];
+	return item;
+}
+
+app.post('/update', function (req, res) {
+	console.log(req.body);
+	var item = select({ ID: req.body.ID });
+	
+	item.Name 	= req.body.Name;
+	item.Age 	= parseInt(req.body.Age);
+	
+  	res.send(people);
+});
+
+app.get('/update2', function (req, res) {
+	console.log(req.query);
+	var item = select({ ID: req.query.ID });
+	
+	item.Name 	= req.query.Name;
+	item.Age 	= parseInt(req.query.Age);
+	
+  	res.send(people);
+});
+
 var server = app.listen(3000, function () {
 
   var host = server.address().address;

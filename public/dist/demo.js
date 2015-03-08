@@ -10730,24 +10730,6 @@ syncdata.observe.setObservable(function(params){
 	// >> End Params
 });
 
-/* >> READ GET
-syncdata.setRoutes({READ: '/read'});
-
-syncdata.read(null, function(response){
-	console.log('GET');
-	console.log(response);
-});
-*/
-
-/* READ POST
-syncdata.setRoutes({READ: '/read2'});
-
-syncdata.read({method: 'POST', async: false, data: {name: 'Steven'} }, function(response){
-	console.log('POST READ');
-	console.log(response);
-});
-*/
-
 // >> CREATE
 /*
 var item = { Name: 'Mochi', Age: 27, cuid: 'ci6yfbkxl0000334z7f1w8gr7' };
@@ -10769,11 +10751,54 @@ syncdata.create({ item: item, method:'GET', async: false, data: item }, function
 });
 */
 
-// >> DELETE
+/* >> READ GET
+syncdata.setRoutes({READ: '/read'});
+
+syncdata.read(null, function(response){
+	console.log('GET');
+	console.log(response);
+});
+*/
+
+/* READ POST
+syncdata.setRoutes({READ: '/read2'});
+
+syncdata.read({method: 'POST', async: false, data: {name: 'Steven'} }, function(response){
+	console.log('POST READ');
+	console.log(response);
+});
+*/
+
+// >> UPDATE
+
 syncdata.setRoutes({READ: '/read'});
 syncdata.read({ async: false });
 var item1 = syncdata.data()[0];
-var item2 = syncdata.data()[0];
+var item2 = syncdata.data()[1];
+
+item1.Name = 'Panfilo';
+
+item2.Name 	= 'Marito';
+item2.Age 	= 100;
+
+syncdata.setRoutes({UPDATE: '/update'});
+syncdata.update({ item: item1 }, function(response) {
+	console.log('POST UPDATE');
+	console.log(response);
+});
+
+syncdata.setRoutes({UPDATE: '/update2'});
+syncdata.update({ item: item2, method: 'GET' }, function(response) {
+	console.log('GET UPDATE');
+	console.log(response);
+});
+
+// >> DELETE
+/*
+syncdata.setRoutes({READ: '/read'});
+syncdata.read({ async: false });
+var item1 = syncdata.data()[0];
+var item2 = syncdata.data()[1];
 
 syncdata.setRoutes({DELETE: '/delete'});
 syncdata.delete({ cuid: item1.cuid, key: 'ID' }, function(response) {
@@ -10781,11 +10806,15 @@ syncdata.delete({ cuid: item1.cuid, key: 'ID' }, function(response) {
 	console.log(response);
 });
 
-syncdata.delete({ cuid: item2.cuid }, function(response) {
-	console.log('POST DELETE');
+syncdata.setRoutes({DELETE: '/delete2'});
+syncdata.delete({ cuid: item2.cuid, method:'GET' }, function(response) {
+	console.log('GET DELETE');
 	console.log(response);
 });
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_3c5062d9.js","/")
+*/
+
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_ea4077f6.js","/")
 },{"./syncdata.js":8,"buffer":2,"oMfpAn":5}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var $ 		= require('jquery'),
@@ -10848,6 +10877,22 @@ var $ 		= require('jquery'),
 			Data.splice(itemIndex, 1);
 		else
 			throw 'Item was not found through cuid ' + params.cuid;
+	}
+	
+ 	updateProps : function updateProps(source, dest) {
+		try {
+			
+			for (var key in source) {
+
+				if(dest.hasOwnProperty(key)){
+					dest[key] = source[key];
+				}
+				
+			}
+		}
+		catch (err)
+		{ throw err; }
+			
 	}
 	 
 	var observableCallback = undefined;
@@ -10954,8 +10999,8 @@ var $ 		= require('jquery'),
 					$.post(routes.READ, params.data, 
 						   function(response) {
 								Data = applyCuid(response);
-								async(obs().execute, [{ route: 'READ', response: response}]);
-								callback(response);
+								async(obs().execute, [{ route: 'READ', response: Data}]);
+								callback(Data);
 							}
 				  	);									
 				}
@@ -10965,8 +11010,8 @@ var $ 		= require('jquery'),
 					$.get(routes.READ, params.data, 
 						   function(response){ 
 								Data = applyCuid(response);
-								async(obs().execute, [{ route: 'READ', response: response}]);
-								callback(response);
+								async(obs().execute, [{ route: 'READ', response: Data}]);
+								callback(Data);
 							}
 				  	);									
 				}
@@ -10974,8 +11019,8 @@ var $ 		= require('jquery'),
 			// Ajax Sync
 				var response = $.ajax({ url: routes.READ, type: params.method, data: params.data, async:false }).responseText;
 				Data = applyCuid(response);
-				async(obs().execute, [{ route: 'READ', response: response}]);
-				callback(response);
+				async(obs().execute, [{ route: 'READ', response: Data}]);
+				callback(Data);
 			}
 			
 			return this;
@@ -11031,6 +11076,58 @@ var $ 		= require('jquery'),
 				deleteItem({ cuid: params.item.cuid });
 				async(obs().execute, [{ route: 'DELETE', response: response, item: params.item }]);
 				callback(response, params.item);
+			}
+			
+			return this;
+		},
+		
+		update: function update(params, callback) {
+			
+			validateRoute({ ROUTE: 'UPDATE', VALUE: routes.UPDATE });
+			validateProps(params, 'item');
+			validateProps(params.item, 'cuid');
+			
+			params = params || {};
+			callback = callback || function() {};
+			
+			(params.hasOwnProperty('async')) 	? params.async = params.async : params.async = true;
+			(params.hasOwnProperty('method')) 	? params.method = params.method : params.method = 'POST';
+			
+			params.currentitem = this.select({ cuid: params.item['cuid'] });
+			
+			if (params.currentitem == null) throw 'Item was not found by cuid ' + params.item['cuid'];
+			if (params.currentitem == 'undefined') throw 'Item was not found by cuid ' + params.item['cuid'];
+			var clone = $.extend({}, params.currentitem);
+			
+			// Ajax Async
+			if (params.async == true) {
+				// POST
+				if (params.method.toUpperCase() == 'POST') {
+					$.post(routes.UPDATE, params.item,
+						   function(response) {
+								updateProps(params.item, params.currentitem);
+								async(obs().execute, [{ route: 'UPDATE', response: response, item: clone }]);
+								callback(response, clone);
+							}
+				  	);									
+				}
+				
+				// GET
+				if (params.method.toUpperCase() == 'GET') {
+					$.get(routes.UPDATE, params.item, 
+						   function(response){ 
+								updateProps(params.item, params.currentitem);
+								async(obs().execute, [{ route: 'UPDATE', response: response, item: clone }]);
+								callback(response, clone );
+							}
+				  	);									
+				}
+			} else {
+			// Ajax Sync
+				var response = $.ajax({ url: routes.UPDATE, type: params.method, data: params.item, async:false }).responseText;
+				updateProps(params.item, params.currentitem);
+				async(obs().execute, [{ route: 'UPDATE', response: response, item: clone }]);
+				callback(response, clone);
 			}
 			
 			return this;
