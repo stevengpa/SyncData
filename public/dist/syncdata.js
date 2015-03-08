@@ -10722,7 +10722,7 @@ return jQuery;
 var $ 		= require('jquery'),
 	cuid 	= require('cuid');
 
- syncdata = function() {
+ syncdata = function syncdata() {
 	
 	var routes = {
 		CREATE: null,
@@ -11080,5 +11080,5 @@ var $ 		= require('jquery'),
 };
 
 module.exports = syncdata();
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_eb072435.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_93b39788.js","/")
 },{"buffer":2,"cuid":1,"jquery":6,"oMfpAn":5}]},{},[7])

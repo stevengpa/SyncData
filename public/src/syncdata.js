@@ -1,7 +1,7 @@
 var $ 		= require('jquery'),
 	cuid 	= require('cuid');
 
- syncdata = function() {
+ syncdata = function syncdata() {
 	
 	var routes = {
 		CREATE: null,

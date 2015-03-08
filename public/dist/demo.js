@@ -10820,13 +10820,13 @@ syncdata.delete({ cuid: item2.cuid, method:'GET' }, function(response) {
 */
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_80a1c318.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_bce47c7e.js","/")
 },{"./syncdata.js":8,"buffer":2,"oMfpAn":5}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var $ 		= require('jquery'),
 	cuid 	= require('cuid');
 
- syncdata = function() {
+ syncdata = function syncdata() {
 	
 	var routes = {
 		CREATE: null,
