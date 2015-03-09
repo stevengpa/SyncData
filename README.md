@@ -93,7 +93,7 @@ syncData.read(function(response) {
 ```
 
 ### Update
-Pass the item with the changes and the it updates the internal array and send the ajax request to the server. The item should contain the cuid property.
+Pass the item with the changes and it is updated the internal array and send the ajax request to the server. The item should contain the cuid property.
 ```
 function update(params, callback)
 params: item (JS Object to include with cuid property) | async (true/false) | method (POST/GET) | data (Ajax data)
@@ -112,4 +112,34 @@ syncData.update({ item: item }, function(response) {
 	console.log(response); // Ajax response
 	console.log(JSON.stringify(syncData.data())); // [{"Name":"Panfilo","Age":27,"cuid":"ci71rh0fk00003352ijew3d28"}]
 });
+```
+### Delete
+Pass the cuid of the item to delete and it is deleted in the internal array and send the ajax request to the server. The item should contain the cuid property.
+```
+function delete(params, callback)
+params: cuid (cuid of the item to delete) | async (true/false) | method (POST/GET) | key (Ajax Send just one Property Field of the item e.g: 'ID')
+returns: server response
+observable result: 
+	item ( {"Name":"Mochi","Age":"27","ID":1,"cuid":"ci71rh0fk00003352ijew3d28"} )
+	response ( Ajax response )
+	route ( DELETE )
+```
+``` javascript
+var item = syncData.data()[0];
+
+syncData.update({ cuid: item.cuid }, function(response) {
+	console.log(response); // Ajax response
+	console.log(JSON.stringify(syncData.data())); // []
+});
+```
+
+### Select
+Search an item by cuid in the internal array (No ajax method involved)
+```
+function select(params)
+params: cuid (cuid of the item to delete) | clone (true/false)
+returns: object
+```
+``` javascript
+var item = syncData.select({ cuid: 'ci71rh0fk00003352ijew3d28' });
 ```
