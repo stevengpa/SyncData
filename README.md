@@ -5,7 +5,7 @@ SyncData is a little Browserify | Node module which manage inside a JavaScript A
 
 #### Browser
 ``` html
-<script src="dist/syncdata.js"></script>
+<script src="dist/browser-syncdata.js"></script>
 ```
 ``` javascript
 var syncdata = syncdata,
@@ -16,5 +16,6 @@ var syncdata = syncdata,
 ``` javascript
 var syncdata = require('./syncdata.js'),
 	syncData = syncdata();
-
 ```
+
+
