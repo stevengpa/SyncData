@@ -23,10 +23,13 @@ app.get('/', function (req, res) {
   res.render('index.html');
 });
 
-var people = [
+/*
 				{ID: 1, Name: 'Steven', Age: 25},
 				{ID: 2, Name: 'Jhon', Age: 15},
 				{ID: 3, Name: 'Jane', Age: 50}
+*/
+var people = [
+
 			 ];
 
 app.get('/read', function (req, res) {

@@ -10803,6 +10803,7 @@ var $ 		= require('jquery'),
 
 	cloneObject : function cloneObject(params) {
 
+		console.log(typeof params.item);
 		validateProps(params, 'item');
 		if(params.item == null || typeof(params.item) != 'object') throw 'Item is not an object.';
 
@@ -11016,7 +11017,7 @@ var $ 		= require('jquery'),
 			(params.hasOwnProperty('async')) 	? params.async = params.async : params.async = true;
 			(params.hasOwnProperty('method')) 	? params.method = params.method : params.method = 'POST';
 
-			params.currentitem = this.select({ cuid: params.item['cuid'] });
+			params.currentitem = this.select({ cuid: params.item['cuid'], clone: false });
 
 			if (params.currentitem == null) throw 'Item was not found by cuid ' + params.item['cuid'];
 			if (params.currentitem == 'undefined') throw 'Item was not found by cuid ' + params.item['cuid'];
@@ -11084,5 +11085,5 @@ var $ 		= require('jquery'),
 };
 
 module.exports = syncdata;
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_70433a1b.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_145bd118.js","/")
 },{"buffer":2,"cuid":1,"jquery":6,"oMfpAn":5}]},{},[7])
