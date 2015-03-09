@@ -3,7 +3,8 @@ var syncdata = require('./syncdata.js'),
 	syncData = syncdata();
 
 // Browser
-// var syncData = syncdata();
+// var syncdata = syncdata,
+//     syncData = syncdata();
 
 // >> Observable
 syncData.observe.setObservable(function(params){
