@@ -1,5 +1,5 @@
 # SyncData
-SyncData is a little Browserify | Node module which manage inside a JavaScript Array + CRUD functionalities. When you use the CRUD functions, it triggers the action to the server via Ajax and modify the JavaScript Array, if the Ajax request fails, you have an observable to take the necessary actions over the JavaScript Array.
+SyncData is a little Browserify | Node module which manage inside a JavaScript Array + CRUD functionalities + Cache ID through [CUID by Eric Elliot](https://github.com/ericelliott/cuid). When you use the CRUD functions, it triggers the action to the server via Ajax and modify the JavaScript Array, if the Ajax request fails, you have an observable to take the necessary actions over the JavaScript Array.
 
 ## Implementation
 
