@@ -141,5 +141,13 @@ params: cuid (cuid of the item to delete) | clone (true/false)
 returns: object
 ```
 ``` javascript
-var item = syncData.select({ cuid: 'ci71rh0fk00003352ijew3d28' });
+var item = syncData.select({ cuid: 'ci71rh0fk00003352ijew3d28'});
+console.log(JSON.stringify(item)); // {"Name":"Mochi","Age":27,"cuid":"ci71rh0fk00003352ijew3d28"}
+```
+
+### jQuery & Cuid - Attached
+SyncData attached to the <i>window or global</i> objects the jQuery and Cuid literal objects
+```
+window.$
+window.cuid
 ```
