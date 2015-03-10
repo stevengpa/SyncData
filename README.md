@@ -43,8 +43,8 @@ syncData.observe.setObservable(function(params){
 	console.log(params);
 });
 ```
-## Inside Array
-You can access the inside JS Array or get a Clone of the Array.
+## Internal Array
+You can access the internal JS Array or get a Clone of the Array.
 ```
 function data(params)
 params: clone (true/false)
