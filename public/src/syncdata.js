@@ -1,5 +1,6 @@
 var $ 		= require('jquery'),
-	cuid 	= require('cuid');
+	cuid 	= require('cuid'),
+	moment 	= require('moment');
 
  syncdata = function syncdata() {
 
@@ -12,8 +13,10 @@ var $ 		= require('jquery'),
 
 	var Data = [];
 
+	 // Attach Libs
 	(this.hasOwnProperty('global')) ? global.$ = $ : window.$ = $;
 	(this.hasOwnProperty('global')) ? global.cuid = cuid : window.cuid = cuid;
+	(this.hasOwnProperty('global')) ? global.moment = moment : window.moment = moment;
 	 
 	async: function async(fn, arguments, callback, ms){
 
@@ -358,7 +361,285 @@ var $ 		= require('jquery'),
 		},
 		
 		// OBSERVABLE
-		observe: obs()
+		observe: obs(),
+		
+		// FUNCTIONALITIES
+		ext: function ext() {
+			return {
+				
+				// >> Date
+				eDate: function eDate() {
+					
+					return {
+						
+						monthName: function monthName(params) {
+							params = params || {};
+
+							var todayDate = new Date();
+							(params.hasOwnProperty('month')) ? params.month = params.month : params.month = todayDate.getMonth();
+							(params.hasOwnProperty('language')) ? params.language = params.language : params.language = 'en';	
+							
+							params.month = parseInt(params.month) + 1;
+							var monthName = '';
+
+							switch(params.language.toLowerCase()) 
+							{
+								case 'en':
+									monthName = [null, 'January','February','March','April','May','June',
+												 'July', 'August','September','October','November','December'];
+									break;
+								case 'es':
+									monthName = [null, 'Enero','Febrero','Marzo','Abril','Mayo','Junio',
+												 'Julio', 'Agosto','Setiembre','Octubre','Noviembre','Diciembre'];
+									break;
+							}
+
+							return monthName[params.month];
+						},
+						
+						dayName: function dayName(params) {
+							params = params || {};
+
+							var todayDate = new Date();
+							(params.hasOwnProperty('day')) ? params.day = (parseInt(params.day) - 1) : params.day = todayDate.getDay();
+							(params.hasOwnProperty('language')) ? params.language = params.language : params.language = 'en';
+							
+							var dayName = '';
+							switch(params.language.toLowerCase()) 
+							{
+								case 'en':
+									dayName = ['Sunday','Monday','Tuesday','Wednesday',
+											   'Thursday','Friday','Saturday'];
+									break;
+								case 'es':
+									dayName = [	'Domingo','Lunes','Martes','Miércoles', 
+											   'Jueves','Viernes','Sábado'];
+									break;
+							}
+
+							return dayName[params.day];
+						},
+						
+						shortDate: function shortDate(params) {
+							params = params || {};
+							
+							(params.hasOwnProperty('value')) ? params.value = params.value : params.value = moment().format('l');
+							(params.hasOwnProperty('format')) ? params.format = params.format.toString().toUpperCase() : params.format = 'MMDDYYYY';
+							
+							return moment(params.value, params.format).format('L');
+						},
+						
+						middleDate: function middleDate(params) {
+							params = params || {};
+							
+							(params.hasOwnProperty('value')) ? params.value = params.value : params.value = moment().format('l');
+							(params.hasOwnProperty('format')) ? params.format = params.format.toString().toUpperCase() : params.format = 'MMDDYYYY';
+							
+							return moment(params.value, params.format).format('LL');
+						},
+						
+						largeDate: function largeDate(params) {
+							params = params || {};
+							
+							(params.hasOwnProperty('value')) ? params.value = params.value : params.value = moment().format('l');
+							(params.hasOwnProperty('format')) ? params.format = params.format.toString().toUpperCase() : params.format = 'MMDDYYYY';
+							
+							return moment(params.value, params.format).format('MMMM Do, YYYY');
+						},
+						
+						longDate: function longDate(params) {
+							params = params || {};
+							
+							(params.hasOwnProperty('value')) ? params.value = params.value : params.value = moment().format('l');
+							(params.hasOwnProperty('format')) ? params.format = params.format.toString().toUpperCase() : params.format = 'MMDDYYYY';
+							
+							return moment(params.value, params.format).format('YYYYMMDD');
+						},
+						
+						fromDate: function fromDate(params) {
+							params = params || {};
+							
+							(params.hasOwnProperty('value')) ? params.value = params.value : params.value = moment().format('l');
+							(params.hasOwnProperty('format')) ? params.format = params.format.toString().toUpperCase() : params.format = 'MMDDYYYY';
+							
+							var longDate = this.longDate({ value: params.value, format: params.format });
+							
+							return moment(longDate, 'YYYYMMDD').fromNow();
+						},
+						
+						fromHours: function fromHours(params) {
+							params = params || {};
+							
+							(params.hasOwnProperty('value')) ? params.value = params.value : params.value = null;
+							
+							if (params.value == null)
+								return moment(new Date()).startOf('hour').fromNow();
+							else
+								return moment(params.value).startOf('hour').fromNow();
+						},
+						
+						fromMinutes: function fromMinutes(params) {
+							params = params || {};
+							
+							(params.hasOwnProperty('value')) ? params.value = params.value : params.value = null;
+							
+							if (params.value == null)
+								return moment(new Date()).startOf('minute').fromNow();
+							else
+								return moment(params.value).startOf('minutes').fromNow();
+						},
+						
+						addDays: function addDays(params) {
+							params = params || {};
+							
+							(params.hasOwnProperty('value')) ? params.value = params.value : params.value = moment().format('l');
+							(params.hasOwnProperty('format')) ? params.format = params.format.toString().toUpperCase() : params.format = 'MMDDYYYY';
+							
+							(params.hasOwnProperty('days')) ? params.days = parseInt(params.days) : params.days = 0;
+							
+							return moment(params.value, params.format).add(params.days, 'days').format('L');
+						},
+						
+						addMonths: function addMonths(params) {
+							params = params || {};
+							
+							(params.hasOwnProperty('value')) ? params.value = params.value : params.value = moment().format('l');
+							(params.hasOwnProperty('format')) ? params.format = params.format.toString().toUpperCase() : params.format = 'MMDDYYYY';
+							
+							(params.hasOwnProperty('months')) ? params.months = parseInt(params.months) : params.months = 0;
+							
+							return moment(params.value, params.format).add(params.months, 'months').format('L');
+						},
+						
+						addYears: function addYears(params) {
+							params = params || {};
+							
+							(params.hasOwnProperty('value')) ? params.value = params.value : params.value = moment().format('l');
+							(params.hasOwnProperty('format')) ? params.format = params.format.toString().toUpperCase() : params.format = 'MMDDYYYY';
+							
+							(params.hasOwnProperty('years')) ? params.years = parseInt(params.years) : params.years = 0;
+							
+							return moment(params.value, params.format).add(params.years, 'years').format('L');
+						},
+						
+					};
+				},
+				
+				// >>Format
+				eFormat: function eFormat()
+				{
+					
+					return {
+						
+						addMiles: function addMiles(params) {
+							params = params || {};
+							validateProps(params, 'value');
+
+							var value = params.value.toString().trim();
+
+							value += '';
+							x = value.split('.');
+							x1 = x[0];
+							x2 = x.length > 1 ? '.' + x[1] : '';
+							var rgx = /(\d+)(\d{3})/;
+							while (rgx.test(x1)) {
+								x1 = x1.replace(rgx, '$1' + ',' + '$2');
+							}
+							
+							return x1 + x2;
+						},
+						
+						removeMiles: function removeMiles(params) {
+							params = params || {};
+							validateProps(params, 'value');
+							
+							var value = params.value.toString().trim();
+							value = parseFloat(value.replace(/,/g, ''));
+
+							return value;
+						}
+
+					};
+				},
+				
+				// >> Validation
+				eVal: function eVal() {
+					
+					return {
+						
+						isNumber: function isNumber(params) {
+							params = params || {};
+							validateProps(params, 'value');
+							
+							var value = params.value.toString();
+
+							value = value.replace(",","");
+
+							if (parseFloat(value)!= value)
+								return false;
+							else
+								return true;
+						},
+						
+						isBlank: function isBlank(params) {
+							params = params || {};
+							validateProps(params, 'value');
+							
+							// Validate is null
+							if (params.value == null) return true;
+							
+							var value = params.value.toString().trim();
+
+							// Validate by length
+							if (value.length == 0)
+								return true;
+							else
+								return false;
+						},
+						
+						isDate: function isDate(params) {
+							params = params || {};
+							validateProps(params, 'value');
+							
+							(params.hasOwnProperty('format')) ? params.format = params.format.toString().toLowerCase() : params.format = 'mm/dd/yyyy';
+
+							  var delimiter = /[^mdy]/.exec(params.format)[0],
+							  theFormat = params.format.split(delimiter),
+							  theDate = params.value.split(delimiter),
+
+							  isDate = function (date, format) {
+								var m, d, y
+								for (var i = 0, len = format.length; i < len; i++) {
+								  if (/m/.test(format[i])) m = date[i]
+								  if (/d/.test(format[i])) d = date[i]
+								  if (/y/.test(format[i])) y = date[i]
+								}
+								return (
+								  m > 0 && m < 13 &&
+								  y && y.length === 4 &&
+								  d > 0 && d <= (new Date(y, m, 0)).getDate()
+								)
+							  }
+
+							  return isDate(theDate, theFormat)
+						},
+						
+						isEmail: function isEmail(params) {
+							params = params || {};
+							validateProps(params, 'value');
+							
+							params.value = params.value.toString().trim();
+		
+							var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+							return re.test(params.value);
+						}
+						
+					};
+					
+				}
+				
+			}
+		}
 	}
 
 };
