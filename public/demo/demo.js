@@ -57,6 +57,7 @@ console.log(JSON.stringify(item2));
 */
 
 /*
+
 console.log( syncData.ext().eDate().monthName() );
 console.log( syncData.ext().eDate().monthName({ language: 'es'}) );
 console.log( syncData.ext().eDate().monthName({ language: 'es', month: '5'}) );
@@ -84,9 +85,6 @@ console.log( syncData.ext().eVal().isDate({ value: '31/01/2015', format: 'MM/DD/
 console.log( syncData.ext().eVal().isEmail({ value: 'steven.ars@ars.com' }) );
 console.log( syncData.ext().eVal().isEmail({ value: 'steven.ars@com' }) );
 
-*/
-
-/*
 console.log( syncData.ext().eDate().shortDate() );
 console.log( syncData.ext().eDate().shortDate({ format: 'DDMMYYYY'}) );
 
@@ -113,14 +111,14 @@ console.log( syncData.ext().eDate().addMonths({ value: '03/10/2015', format: 'DD
 console.log( syncData.ext().eDate().addYears({ value: '03/10/2015', format: 'DD/MM/YYYY', years:1 }) );
 console.log( syncData.ext().eDate().addYears({ value: '03/10/2015', format: 'MM/DD/YYYY', years:1 }) );
 
-*/
-
 var tempDateTime = new Date()
 
 console.log( 'tempDateTime = ' + tempDateTime  );
 console.log( syncData.ext().eDate().fromHours() );
 console.log( syncData.ext().eDate().fromHours({ value: tempDateTime }) );
-console.log(  );
-console.log(  );
-console.log(  );
-console.log(  );
+
+console.log( syncData.ext().eSecurity().encrypt({ value: 'Steven' }) );
+console.log( syncData.ext().eSecurity().encrypt({ value: 'Steven', token: '123' }) );
+console.log( syncData.ext().eSecurity().decrypt({ value: 'U2FsdGVkX1/FDt3HsDRceF8+2IFBM/6MW5jorbjlURs=', token: '123' }) );
+
+*/

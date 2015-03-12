@@ -1,6 +1,8 @@
-var $ 		= require('jquery'),
-	cuid 	= require('cuid'),
-	moment 	= require('moment');
+var $ 			= require('jquery'),
+	cuid 		= require('cuid'),
+	moment 		= require('moment'),
+	Cryptojs 	= require('node-cryptojs-aes'),
+	cryptojs 	= Cryptojs.CryptoJS;
 
  syncdata = function syncdata() {
 
@@ -17,6 +19,7 @@ var $ 		= require('jquery'),
 	(this.hasOwnProperty('global')) ? global.$ = $ : window.$ = $;
 	(this.hasOwnProperty('global')) ? global.cuid = cuid : window.cuid = cuid;
 	(this.hasOwnProperty('global')) ? global.moment = moment : window.moment = moment;
+	(this.hasOwnProperty('global')) ? global.cryptojs = cryptojs : window.cryptojs = cryptojs;
 	 
 	async: function async(fn, arguments, callback, ms){
 
@@ -120,6 +123,7 @@ var $ 		= require('jquery'),
 			setObservable: setObservable
 		};
 	}
+	 
 
 	return {
 
@@ -363,8 +367,15 @@ var $ 		= require('jquery'),
 		// OBSERVABLE
 		observe: obs(),
 		
+		// CLONE
+		cloneObject: cloneObject,
+		
+		// RUN ASYNC FUNCTIONS
+		async: async,
+		
 		// FUNCTIONALITIES
 		ext: function ext() {
+			
 			return {
 				
 				// >> Date
@@ -522,12 +533,15 @@ var $ 		= require('jquery'),
 							return moment(params.value, params.format).add(params.years, 'years').format('L');
 						},
 						
+						now: function now() {
+							return moment().format('YYYY-MM-DD, h:mm:ss a');
+						}
+						
 					};
 				},
 				
 				// >>Format
-				eFormat: function eFormat()
-				{
+				eFormat: function eFormat() {
 					
 					return {
 						
@@ -557,6 +571,14 @@ var $ 		= require('jquery'),
 							value = parseFloat(value.replace(/,/g, ''));
 
 							return value;
+						},
+						
+						error: function error(params) {
+							params = params || {};
+							validateProps(params, 'value');
+							
+							var msg = (params.value.message != null) ? params.value.message : params.value;
+							return msg;
 						}
 
 					};
@@ -636,10 +658,48 @@ var $ 		= require('jquery'),
 						
 					};
 					
+				},
+				
+				// >> Security
+				eSecurity: function eSecurity() {
+
+					return {
+
+						encrypt: function encrypt(params) {
+
+							params = params || {};
+							validateProps(params, 'value');
+							(params.hasOwnProperty('token')) ? params.token = params.token : params.token = cuid();
+
+							var encrypted = cryptojs.AES.encrypt(params.value, params.token);
+
+							return {
+								token: params.token,
+								encrypted: encrypted.toString()
+							};
+						},
+						
+						decrypt: function decrypt(params) {
+
+							params = params || {};
+							validateProps(params, 'value');
+							validateProps(params, 'token');
+
+							var decrypted = cryptojs.AES.decrypt(params.value, params.token);
+
+							return {
+								token: params.token,
+								decrypted: decrypted.toString(cryptojs.enc.Utf8)
+							};
+						}
+
+					};
+
 				}
 				
 			}
 		}
+		
 	}
 
 };
