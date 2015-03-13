@@ -322,7 +322,6 @@ syncData.ext().eVal().isBlank({ value: '2,500a' }); // false
 syncData.ext().eVal().isBlank({ value: '' }); // true
 syncData.ext().eVal().isBlank({ value: null }); // true
 ```
-
 #### eVal().isDate()
 ```
 function isDate(params)
@@ -334,10 +333,45 @@ syncData.ext().eVal().isDate({ value: '12/01/2015' }); // true
 syncData.ext().eVal().isDate({ value: '31/01/2015', format: 'DD/MM/YYYY' }); // true
 syncData.ext().eVal().isDate({ value: '31/01/2015', format: 'MM/DD/YYYY' }); // false
 ```
+#### eVal().isEmail()
+```
+function isEmail(params)
+params: value (email string)
+returns: true/false
+```
+``` javascript
+syncData.ext().eVal().isEmail({ value: 'steven.ars@ars.com' }); // true
+syncData.ext().eVal().isEmail({ value: 'steven.ars@com' }); // false
+```
+
+#### eSecurity()
+
+#### eSecurity().encrypt()
+```
+function encrypt(params)
+params: value (string to encrypt) | token (Hash string)
+returns: { encrypted, token }
+```
+``` javascript
+syncData.ext().eSecurity().encrypt({ value: 'Steven' }); // Object {token: "ci76xqrxp000032566nbk822h", encrypted: "U2FsdGVkX19zqWXY+GFhqCXbu7BGW1HFqC5Sgt/A+2c="}
+syncData.ext().eSecurity().encrypt({ value: 'Steven', token: '123' }); // Object {token: "123", encrypted: "U2FsdGVkX19ff8dbBucraT7HXm3nW10i1Z7TOLMFQi0="}
+```
+
+#### eSecurity().decrypt()
+```
+function decrypt(params)
+params: value (string to decrypt) | token (Hash string)
+returns: { decrypted, token }
+```
+``` javascript
+syncData.ext().eSecurity().decrypt({ value: 'U2FsdGVkX1/FDt3HsDRceF8+2IFBM/6MW5jorbjlURs=', token: '123' }); // Object {token: "123", decrypted: "Steven"} 
+```
 
 ### jQuery & Cuid - Attached
 SyncData attached to the <i>window or global</i> objects the jQuery and Cuid literal objects
 ```
-window.$
-window.cuid
+global.$        / window.$
+global.cuid     / window.cuid
+global.moment   / window.moment
+global.cryptojs / window.cryptojs
 ```
