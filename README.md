@@ -367,7 +367,7 @@ returns: { decrypted, token }
 syncData.ext().eSecurity().decrypt({ value: 'U2FsdGVkX1/FDt3HsDRceF8+2IFBM/6MW5jorbjlURs=', token: '123' }); // Object {token: "123", decrypted: "Steven"} 
 ```
 
-### jQuery & Cuid - Attached
+### jQuery, cuid, moment, crypto - Global Scope
 SyncData attached to the <i>window or global</i> objects the jQuery and Cuid literal objects
 ```
 global.$        / window.$
