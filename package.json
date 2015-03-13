@@ -1,8 +1,8 @@
 {
-  "name": "Demo",
+  "name": "SyncData",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "SyncData allows easy CRUD Array <-> Ajax <-> Server interactions, also has validations, date mng and so on.",
+  "main": "index.js",
   "dependencies": {
     "body-parser": "^1.10.1",
     "ejs": "^2.1.4",
