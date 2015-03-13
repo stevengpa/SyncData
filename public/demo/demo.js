@@ -64,26 +64,6 @@ console.log( syncData.ext().eDate().monthName({ language: 'es', month: '5'}) );
 
 console.log( syncData.ext().eDate().dayName() );
 console.log( syncData.ext().eDate().dayName({ language: 'es' }) );
-console.log( syncData.ext().eDate().dayName({ language: 'es', day: '6' }) );
-
-console.log( syncData.ext().eFormat().addMiles({ value: '1000' }) );
-console.log( syncData.ext().eFormat().addMiles({ value: 1000 }) );
-
-console.log( syncData.ext().eFormat().removeMiles({ value: '1,000' }) );
-
-console.log( syncData.ext().eVal().isNumber({ value: '2,500' }) );
-console.log( syncData.ext().eVal().isNumber({ value: '2,500a' }) );
-
-console.log( syncData.ext().eVal().isBlank({ value: '2,500a' }) );
-console.log( syncData.ext().eVal().isBlank({ value: '' }) );
-console.log( syncData.ext().eVal().isBlank({ value: null }) );
-
-console.log( syncData.ext().eVal().isDate({ value: '12/01/2015' }) );
-console.log( syncData.ext().eVal().isDate({ value: '31/01/2015', format: 'DD/MM/YYYY' }) );
-console.log( syncData.ext().eVal().isDate({ value: '31/01/2015', format: 'MM/DD/YYYY' }) );
-
-console.log( syncData.ext().eVal().isEmail({ value: 'steven.ars@ars.com' }) );
-console.log( syncData.ext().eVal().isEmail({ value: 'steven.ars@com' }) );
 
 console.log( syncData.ext().eDate().shortDate() );
 console.log( syncData.ext().eDate().shortDate({ format: 'DDMMYYYY'}) );
@@ -116,6 +96,25 @@ var tempDateTime = new Date()
 console.log( 'tempDateTime = ' + tempDateTime  );
 console.log( syncData.ext().eDate().fromHours() );
 console.log( syncData.ext().eDate().fromHours({ value: tempDateTime }) );
+
+console.log( syncData.ext().eFormat().addMiles({ value: '1000' }) );
+console.log( syncData.ext().eFormat().addMiles({ value: 1000 }) );
+
+console.log( syncData.ext().eFormat().removeMiles({ value: '1,000' }) );
+
+console.log( syncData.ext().eVal().isNumber({ value: '2,500' }) );
+console.log( syncData.ext().eVal().isNumber({ value: '2,500a' }) );
+
+console.log( syncData.ext().eVal().isBlank({ value: '2,500a' }) );
+console.log( syncData.ext().eVal().isBlank({ value: '' }) );
+console.log( syncData.ext().eVal().isBlank({ value: null }) );
+
+console.log( syncData.ext().eVal().isDate({ value: '12/01/2015' }) );
+console.log( syncData.ext().eVal().isDate({ value: '31/01/2015', format: 'DD/MM/YYYY' }) );
+console.log( syncData.ext().eVal().isDate({ value: '31/01/2015', format: 'MM/DD/YYYY' }) );
+
+console.log( syncData.ext().eVal().isEmail({ value: 'steven.ars@ars.com' }) );
+console.log( syncData.ext().eVal().isEmail({ value: 'steven.ars@com' }) );
 
 console.log( syncData.ext().eSecurity().encrypt({ value: 'Steven' }) );
 console.log( syncData.ext().eSecurity().encrypt({ value: 'Steven', token: '123' }) );
