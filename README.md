@@ -145,6 +145,136 @@ var item = syncData.select({ cuid: 'ci71rh0fk00003352ijew3d28'});
 console.log(JSON.stringify(item)); // {"Name":"Mochi","Age":27,"cuid":"ci71rh0fk00003352ijew3d28"}
 ```
 
+### Extension <i>ext()</i>
+It is an object which contains sub objects with different purposes, for example: eVal, it contains functions
+like: validates isNumber, isBlank, isEmail, another example... eDate, this contains: monthName, dayName and so on.
+
+#### eDate()
+
+#### eDate().monthName()
+```
+function monthName(params)
+params: month (month number) | language (en/es)
+returns: string
+```
+``` javascript
+syncData.ext().eDate().monthName(); // Current Month Name in English
+syncData.ext().eDate().monthName({ language: 'es'}); // Current Month Name in Spanish
+syncData.ext().eDate().monthName({ language: 'es', month: '5'}); // Junio
+```
+#### eDate().dayName()
+```
+function dayName(params)
+params: day (day number) | language (en/es)
+returns: string
+```
+``` javascript
+syncData.ext().eDate().dayName(); // Current Day Name in English
+syncData.ext().eDate().dayName({ language: 'es'}); // Current Day Name in Spanish
+```
+
+#### eDate().shortDate()
+```
+function shortDate(params)
+params: value (date) | format ('MMDDYYYY')
+returns: string
+```
+``` javascript
+syncData.ext().eDate().shortDate(); // Example: 03/12/2015
+syncData.ext().eDate().shortDate({ format: 'DDMMYYYY'}); // Example: 12/03/2015
+```
+
+#### eDate().middleDate()
+```
+function middleDate(params)
+params: value (date) | format ('MMDDYYYY')
+returns: string
+```
+``` javascript
+syncData.ext().eDate().middleDate(); // Example: March 12, 2015
+syncData.ext().eDate().middleDate({ format: 'DDMMYYYY'}); // Example: December 3, 2015
+```
+
+#### eDate().largeDate()
+```
+function largeDate(params)
+params: value (date) | format ('MMDDYYYY')
+returns: string
+```
+``` javascript
+syncData.ext().eDate().largeDate(); // Example: March 12th, 2015
+syncData.ext().eDate().largeDate({ format: 'DDMMYYYY'}); // Example: December 3rd, 2015
+```
+
+#### eDate().longDate()
+```
+function longDate(params)
+params: value (date) | format ('MMDDYYYY')
+returns: string
+```
+``` javascript
+syncData.ext().eDate().longDate(); // Example: 20150312
+syncData.ext().eDate().longDate({ format: 'DDMMYYYY'}); // Example: 20151203
+syncData.ext().eDate().longDate({ value: '25/1/2015', format: 'DD/MM/YYYY'}); // Example: 20150125
+```
+
+#### eDate().fromDate() / eDate().fromHours() / eDate().fromMinutes()
+```
+function fromDate(params)
+params: value (date) | format ('MMDDYYYY')
+returns: string
+```
+``` javascript
+syncData.ext().eDate().fromDate(); // Example: 19 hours ago
+syncData.ext().eDate().fromDate({ value: '03/10/2015'}); // Example: 3 days ago
+syncData.ext().eDate().fromDate({ value: '03/10/2015', format: 'DD/MM/YYYY'}); // Example: in 7 months
+```
+
+#### eDate().addDays()
+```
+function addDays(params)
+params: value (date) | format ('MMDDYYYY') | days (number of days to add)
+returns: string
+```
+``` javascript
+syncData.ext().eDate().addDays({ days:1 }); // Example: 03/13/2015
+syncData.ext().eDate().addDays({ value: '03/10/2015', format: 'DD/MM/YYYY', days:1 }); // Example: 10/04/2015
+syncData.ext().eDate().addDays({ value: '03/10/2015', format: 'MM/DD/YYYY', days:1 }); // Example: 03/11/2015
+```
+
+#### eDate().addMonths()
+```
+function addMonths(params)
+params: value (date) | format ('MMDDYYYY') | months (number of months to add)
+returns: string
+```
+``` javascript
+syncData.ext().eDate().addMonths({ months:1 }); // Example: 04/12/2015
+syncData.ext().eDate().addMonths({ value: '03/10/2015', format: 'MM/DD/YYYY', months:1 }); // Example: 04/10/2015
+syncData.ext().eDate().addMonths({ value: '03/10/2015', format: 'DD/MM/YYYY', months:1 }); // Example: 11/03/2015
+```
+
+#### eDate().addYears()
+```
+function addYears(params)
+params: value (date) | format ('MMDDYYYY') | years (number of years to add)
+returns: string
+```
+``` javascript
+syncData.ext().eDate().addYears({ years:1 }); // Example: 03/12/2016
+syncData.ext().eDate().addYears({ value: '03/10/2015', format: 'DD/MM/YYYY', years:1 }); // Example: 10/03/2016
+syncData.ext().eDate().addYears({ value: '03/10/2015', format: 'MM/DD/YYYY', years:1 }); // Example: 03/10/2016
+```
+
+#### eDate().now()
+```
+function now()
+returns: string
+```
+``` javascript
+syncData.ext().eDate().now(); // Example: 2015-03-12, 7:14:09 pm
+```
+
 ### jQuery & Cuid - Attached
 SyncData attached to the <i>window or global</i> objects the jQuery and Cuid literal objects
 ```
