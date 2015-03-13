@@ -162,6 +162,7 @@ syncData.ext().eDate().monthName(); // Current Month Name in English
 syncData.ext().eDate().monthName({ language: 'es'}); // Current Month Name in Spanish
 syncData.ext().eDate().monthName({ language: 'es', month: '5'}); // Junio
 ```
+
 #### eDate().dayName()
 ```
 function dayName(params)
@@ -176,7 +177,7 @@ syncData.ext().eDate().dayName({ language: 'es'}); // Current Day Name in Spanis
 #### eDate().shortDate()
 ```
 function shortDate(params)
-params: value (date) | format ('MMDDYYYY')
+params: value (date) | format (Date Format)
 returns: string
 ```
 ``` javascript
@@ -187,7 +188,7 @@ syncData.ext().eDate().shortDate({ format: 'DDMMYYYY'}); // Example: 12/03/2015
 #### eDate().middleDate()
 ```
 function middleDate(params)
-params: value (date) | format ('MMDDYYYY')
+params: value (date) | format (Date Format)
 returns: string
 ```
 ``` javascript
@@ -198,7 +199,7 @@ syncData.ext().eDate().middleDate({ format: 'DDMMYYYY'}); // Example: December 3
 #### eDate().largeDate()
 ```
 function largeDate(params)
-params: value (date) | format ('MMDDYYYY')
+params: value (date) | format (Date Format)
 returns: string
 ```
 ``` javascript
@@ -209,7 +210,7 @@ syncData.ext().eDate().largeDate({ format: 'DDMMYYYY'}); // Example: December 3r
 #### eDate().longDate()
 ```
 function longDate(params)
-params: value (date) | format ('MMDDYYYY')
+params: value (shortDate string) | format (Date Format)
 returns: string
 ```
 ``` javascript
@@ -221,7 +222,7 @@ syncData.ext().eDate().longDate({ value: '25/1/2015', format: 'DD/MM/YYYY'}); //
 #### eDate().fromDate() / eDate().fromHours() / eDate().fromMinutes()
 ```
 function fromDate(params)
-params: value (date) | format ('MMDDYYYY')
+params: value (shortDate string) | format (Date Format)
 returns: string
 ```
 ``` javascript
@@ -233,7 +234,7 @@ syncData.ext().eDate().fromDate({ value: '03/10/2015', format: 'DD/MM/YYYY'}); /
 #### eDate().addDays()
 ```
 function addDays(params)
-params: value (date) | format ('MMDDYYYY') | days (number of days to add)
+params: value (shortDate string) | format (Date Format) | days (number of days to add)
 returns: string
 ```
 ``` javascript
@@ -245,7 +246,7 @@ syncData.ext().eDate().addDays({ value: '03/10/2015', format: 'MM/DD/YYYY', days
 #### eDate().addMonths()
 ```
 function addMonths(params)
-params: value (date) | format ('MMDDYYYY') | months (number of months to add)
+params: value (shorDate string) | format (Date Format) | months (number of months to add)
 returns: string
 ```
 ``` javascript
@@ -257,7 +258,7 @@ syncData.ext().eDate().addMonths({ value: '03/10/2015', format: 'DD/MM/YYYY', mo
 #### eDate().addYears()
 ```
 function addYears(params)
-params: value (date) | format ('MMDDYYYY') | years (number of years to add)
+params: value (shortDate string) | format (Date Format) | years (number of years to add)
 returns: string
 ```
 ``` javascript
@@ -273,6 +274,65 @@ returns: string
 ```
 ``` javascript
 syncData.ext().eDate().now(); // Example: 2015-03-12, 7:14:09 pm
+```
+#### eFormat()
+
+#### eFormat().addMiles()
+```
+function addMiles(params)
+params: value (number/string)
+returns: string
+```
+``` javascript
+syncData.ext().eFormat().addMiles({ value: '1000' }); // 1,000
+syncData.ext().eFormat().addMiles({ value: 1000 }); // 1,000
+```
+
+#### eFormat().removeMiles()
+```
+function removeMiles(params)
+params: value (string)
+returns: float
+```
+``` javascript
+syncData.ext().eFormat().removeMiles({ value: '1,000' }); // 1000
+```
+
+#### eVal()
+
+#### eVal().isNumber()
+```
+function isNumber(params)
+params: value (number/string)
+returns: true/false
+```
+``` javascript
+syncData.ext().eVal().isNumber({ value: '2,500' }); // true
+syncData.ext().eVal().isNumber({ value: '2,500a' }); // false
+```
+
+#### eVal().isBlank()
+```
+function isBlank(params)
+params: value (number/string)
+returns: true/false
+```
+``` javascript
+syncData.ext().eVal().isBlank({ value: '2,500a' }); // false
+syncData.ext().eVal().isBlank({ value: '' }); // true
+syncData.ext().eVal().isBlank({ value: null }); // true
+```
+
+#### eVal().isDate()
+```
+function isDate(params)
+params: value (shortDate string) | format (Date Format)
+returns: true/false
+```
+``` javascript
+syncData.ext().eVal().isDate({ value: '12/01/2015' }); // true
+syncData.ext().eVal().isDate({ value: '31/01/2015', format: 'DD/MM/YYYY' }); // true
+syncData.ext().eVal().isDate({ value: '31/01/2015', format: 'MM/DD/YYYY' }); // false
 ```
 
 ### jQuery & Cuid - Attached
