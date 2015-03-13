@@ -1,5 +1,5 @@
 {
-  "name": "SyncData",
+  "name": "syncdata",
   "version": "1.0.0",
   "description": "SyncData allows easy CRUD Array <-> Ajax <-> Server interactions, also has validations, date mng and so on.",
   "main": "index.js",
