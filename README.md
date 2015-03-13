@@ -12,10 +12,13 @@ var syncdata = syncdata,
     syncData = syncdata();
 ```
 
-#### Browserify | Node
+#### Node
+```
+npm install syncdata
+```
 ``` javascript
-var syncdata = require('./syncdata.js'),
-	syncData = syncdata();
+var syncdata 	= require('syncdata'),
+	syncData 	= syncdata();
 ```
 ## setRoutes
 It is important to set the server routes where you will send & request information to the server.
