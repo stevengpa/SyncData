@@ -88,7 +88,6 @@ var $ 			= require('jquery'),
 
 	cloneObject : function cloneObject(params) {
 
-		console.log(typeof params.item);
 		validateProps(params, 'item');
 		if(params.item == null || typeof(params.item) != 'object') throw 'Item is not an object.';
 
@@ -372,6 +371,14 @@ var $ 			= require('jquery'),
 		
 		// RUN ASYNC FUNCTIONS
 		async: async,
+		
+        // CHECK THE SIZE OF AN OBJECT / ARRAY
+		_size: function _size(params) {
+			params = params || {};
+			(params.hasOwnProperty('value')) ? params.value = params.value : params.value = [];
+			if (params.value == 'undefined') return 0;
+			return params.value.length;
+		},
 		
 		// FUNCTIONALITIES
 		ext: function ext() {

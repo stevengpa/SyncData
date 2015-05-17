@@ -16223,7 +16223,6 @@ var $ 			= require('jquery'),
 
 	cloneObject : function cloneObject(params) {
 
-		console.log(typeof params.item);
 		validateProps(params, 'item');
 		if(params.item == null || typeof(params.item) != 'object') throw 'Item is not an object.';
 
@@ -16507,6 +16506,14 @@ var $ 			= require('jquery'),
 		
 		// RUN ASYNC FUNCTIONS
 		async: async,
+		
+        // CHECK THE SIZE OF AN OBJECT / ARRAY
+		_size: function _size(params) {
+			params = params || {};
+			(params.hasOwnProperty('value')) ? params.value = params.value : params.value = [];
+			if (params.value == 'undefined') return 0;
+			return params.value.length;
+		},
 		
 		// FUNCTIONALITIES
 		ext: function ext() {
@@ -16840,5 +16847,5 @@ var $ 			= require('jquery'),
 };
 
 module.exports = syncdata;
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_5a45e14a.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_be18c760.js","/")
 },{"buffer":2,"cuid":1,"jquery":6,"moment":7,"node-cryptojs-aes":8,"oMfpAn":5}]},{},[16])
